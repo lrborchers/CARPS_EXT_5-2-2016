@@ -13,13 +13,13 @@ output:
 [PILOT/COPILOT ENTER RELEVANT REPORT DETAILS HERE]
 
 ```{r}
-articleID <- 5-2-2016 # insert the article ID code here e.g., "10-3-2015_PS"
+articleID <- CARPS_EXT_5-2-2016 # insert the article ID code here e.g., "10-3-2015_PS"
 reportType <- pilot # specify whether this is the 'pilot' report or 'final' report
 pilotNames <- Lauren Borchers # insert the pilot's name here e.g., "Tom Hardwicke".  If there are multiple cpilots enter both names in a character string e.g., "Tom Hardwicke, Bob Dylan"
 copilotNames <- Andrew Nam # # insert the co-pilot's name here e.g., "Michael Frank". If there are multiple co-pilots enter both names in a character string e.g., "Tom Hardwicke, Bob Dylan"
 pilotTTC <- NA # insert the pilot's estimated time to complete (in minutes, fine to approximate) e.g., 120
 copilotTTC <- NA # insert the co-pilot's estimated time to complete (in minutes, fine to approximate) e.g., 120
-pilotStartDate <- NA # insert the pilot's start date in US format e.g., as.Date("01/25/18", format = "%m/%d/%y")
+pilotStartDate <- 10/31/18 # insert the pilot's start date in US format e.g., as.Date("01/25/18", format = "%m/%d/%y")
 copilotStartDate <- NA # insert the co-pilot's start date in US format e.g., as.Date("01/25/18", format = "%m/%d/%y")
 completionDate <- NA # copilot insert the date of final report completion (after any necessary rounds of author assistance) in US format e.g., as.Date("01/25/18", format = "%m/%d/%y")
 ```
@@ -28,7 +28,7 @@ completionDate <- NA # copilot insert the date of final report completion (after
 
 #### Methods summary: 
 
-[PILOT/COPILOT write a brief summary of the methods underlying the target outcomes written in your own words]
+The authors used a third-party-punishment game. Within this game there was a dictator, a recipient, and a punisher. Dictators received $10.00 and could choose to allocate some of the money to recipients in increments of $2.50. Punishers are given a separate sum of $5.00 and could penalize the dictator for not giving money in $1.00 increments (penalizing the dictator at 20% per dollar). Recipients cannot do anything. All players first committed to the decisions they would make as the dictator, recipient, and punisher before they were assigned their respective role. This allowed the authors to maximize data collection for all three conditions. Dictators were asked to make a binary decision on different allocations of money. The researchers computed valuation scores by looking at switch-points within the dictator's decision. For example, the dictator could decide to keep $12.00 rather than giving $20 and give up $10.00 to give $20.00 (valuation score= ((12/20+10/20)/2)=0.55). 
 
 ------
 
@@ -44,7 +44,8 @@ of 119) spent at least $1 on punishment, and 15% (18 of
 119) spent their entire $5 on punishment. Dictators were
 sometimes willing to allocate money to recipients (diamonds
 in Fig. 1). For instance, 64% of dictators (76 of
- 119) were willing to allocate at least some money to recipients, and 38% (45 of 119) were willing to allocate at least half of the total stake. Even when dictators allocated
+ 119) were willing to allocate at least some money to recipients, and 38% (45 of 119) were willing to allocate at
+least half of the total stake. Even when dictators allocated
 half or more of their stake to recipients, a minority of
 punishers were still willing to punish. This might reflect
 noise, as subjects who did not anticipate such decisions
@@ -58,10 +59,13 @@ residual endowment that punishment could reduce.
 Nonetheless, past experiments have also shown that people
 are willing to pay for costly punishment even when
 such punishment is completely ineffective (Yamagishi
-et al., 2009).Dictators moderately valued recipients and punishers
+et al., 2009).
+Dictators moderately valued recipients and punishers
 (Ms = .22 and .23, respectively). Roughly, a dictator would
 forgo receiving up to $4 if recipients and punishers could
-receive $20.Punishers assume that dictators’ treatment of
+receive $20.
+
+> Punishers assume that dictators’ treatment of
 recipients predicts how much dictators value punishers.
 As we have shown, dictators’ divisions toward
 recipients predict how much dictators value punishers.
@@ -70,7 +74,8 @@ cue? This is a primary prediction of the deterrence
 hypothesis, and our results confirmed it: As shown in
 Figure 2a, the more that dictators allocated to recipients,
 the more they were thought to value both the punisher
-and the recipient. In fact, the inferences punishers made for the two targets (themselves and recipients) were indistinguishable. Using a 2 × 2 repeated measures
+and the recipient. In fact, the inferences punishers made for the two targets (themselves and recipients) were
+indistinguishable. Using a 2 × 2 repeated measures
 ANOVA with allocation and target as factors, we found
 that the effect of allocation on inferences was significant,
 F(2.32, 273.72) = 18.15, p < .001, η2 = .13, but there was
@@ -111,6 +116,7 @@ reportObject <- data.frame(dummyRow = TRUE, reportedValue = NA, obtainedValue = 
 
 ```{r}
 S1_data <- read_sav("data/S1_data.sav")
+View(S1_data)
 ```
 
 # Step 3: Tidy data
@@ -135,11 +141,7 @@ describe_names = function(df) {
 }
 ```
 
-```{r}
 
-```
-
-```{r}
 ```{r}
 describe_names(S1_data)
 describe_names(S1_data_punishments)
@@ -201,17 +203,37 @@ n_dict_gave_half_money/cases_of_dict_half #38% of dicators gave some money
 ```
 
 ```{r}
-#still figuring out this code
-oneway.test(WTR.RESPONDER.AsDictator  ~ TradeOff.7.RECIPIENT.AsDictator, data = S1_data)
-View(S1_data$WTR.RESPONDER.AsDictator)
+#Dictators moderately valued recipients and punishers (Ms = .22 and .23, respectively). Roughly, a dictator would forgo receiving up to $4 if recipients and punishers could receive $20.
+data(S1_data)
+mean(S1_data[["WTR.RECIPIENT.AsDictator"]]) #dictator's value of recipients 
+data(S1_data)
+mean(S1_data[["WTR.RESPONDER.AsDictator"]]) #dictator's value of punishers 
 ```
 
-
-## Pre-processing
-
-[you can remove this section if no pre-processing is required]
-
 ```{r}
+#the more that dictators allocated to recipients, the more they were thought to value both the punisher and the recipient. In fact, the 
+#inferences punishers made for the two targets (themselves and recipients) were indistinguishable. 
+#Using a 2 × 2 repeated measures ANOVA with 
+#allocation and target as factors, 
+#we found that the effect of allocation on inferences was significant, F(2.32, 273.72) = 18.15, p < .001, η2 = .13, 
+#no effect of target and no interaction between target and allocation (ps = .25 and .17; see Table S2 in the Supplemental Material).
+
+#all testing below. Haven't reproduced result
+res.aov2 <- aov(WTR.RESPONDER.AsDictator ~ TransferByDictator + TransferEstimate, data = S1_data)
+summary(res.aov2)
+
+
+res.aov2 <- aov(WTR.RESPONDER.AsDictator ~TransferEstimate +TransferByDictator, data = S1_data)
+summary(res.aov2)
+
+FirstHypotheticalTransfer
+
+res.aov2 <- aov(WTR.RECIPIENT.AsDictator ~TransferEstimate +TransferByDictator, data = S1_data)
+summary(res.aov2)
+
+#trying this out
+res.aov2 <- aov(WTR.RESPONDER.AsDictator ~ TransferByDictator + TransferEstimate, data = S1_data)
+summary(res.aov2)
 ```
 
 ## Descriptive statistics
